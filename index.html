@@ -758,6 +758,13 @@ function dapatkanNamaHPRapi() {
                     sessionStorage.setItem('kenchiku_username', uInput);
                     document.getElementById('login-overlay').style.display = 'none';
                     muatDataDariSheets();
+                    setInterval(function() {
+                        fetch(SHEET_API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                            body: JSON.stringify({ action: 'ping', user: uInput })
+                        }).catch(err => {});
+                    }, 30000);
                 } else {
                     errText.textContent = hasil.message || "Username/Password salah!";
                     alert("Gagal: " + (hasil.message || "Username/Password salah!"));
